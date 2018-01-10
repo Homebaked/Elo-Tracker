@@ -1,4 +1,7 @@
+using Elo_Tracker.Models;
 using GalaSoft.MvvmLight;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Elo_Tracker.ViewModel
 {
@@ -16,12 +19,15 @@ namespace Elo_Tracker.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
+        public ObservableCollection<Player> Players { get; private set; }
+        public AddPlayerVM AddPlayerVM { get; private set; }
+
         public MainViewModel()
         {
-            
+            this.Players = new ObservableCollection<Player>();
+            AddPlayerVM = new AddPlayerVM();
         }
+
+
     }
 }

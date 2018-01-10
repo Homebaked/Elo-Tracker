@@ -63,12 +63,12 @@ namespace Elo_Tracker.Models
 
         public static Game CreateNewGame(Player white, Player black, WinState winner)
         {
-            return new Game(white, black);
+            return new Game(white, black, winner);
         }
 
         public static Game CreateExistingGame(Player white, Player black, WinState winner, Guid guid, int whiteStartScore, int blackStartScore, DateTime timePlayed)
         {
-            return new Game(white, black, guid, whiteStartScore, blackStartScore, timePlayed);
+            return new Game(white, black, winner, guid, whiteStartScore, blackStartScore, timePlayed);
         }
     }
 }
