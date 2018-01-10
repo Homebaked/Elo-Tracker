@@ -12,6 +12,8 @@ namespace Elo_Tracker.ViewModel
 {
     public class AddPlayerVM : ViewModelBase
     {
+        private Random rand;
+
         private string _playerName;
 
         public string PlayerName
@@ -32,11 +34,13 @@ namespace Elo_Tracker.ViewModel
         {
             _playerName = "";
             AddPlayerCommand = new RelayCommand(AddPlayerExecute, AddPlayerCanExecute);
+            rand = new Random();
         }
 
         private void AddPlayerExecute()
         {
             Player newPlayer = Player.CreateNewPlayer(PlayerName);
+            newPlayer.SetScore(rand.Next(0, 2000));
             PlayerAdded?.Invoke(newPlayer);
             PlayerName = "";
         }

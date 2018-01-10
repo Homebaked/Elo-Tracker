@@ -2,6 +2,7 @@ using Elo_Tracker.Models;
 using GalaSoft.MvvmLight;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Elo_Tracker.ViewModel
 {
@@ -19,15 +20,33 @@ namespace Elo_Tracker.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        public ObservableCollection<Player> Players { get; private set; }
+        private ObservableCollection<Player> _players;
+        public ObservableCollection<Player> Players
+        {
+            get
+            {
+                return _players;
+            }
+            private set
+            {
+                _players = value;
+                RaisePropertyChanged("Players");
+            }
+        }
+
         public AddPlayerVM AddPlayerVM { get; private set; }
 
         public MainViewModel()
         {
             this.Players = new ObservableCollection<Player>();
             AddPlayerVM = new AddPlayerVM();
+            AddPlayerVM.PlayerAdded += addNewPlayer;
         }
 
-
+        private void addNewPlayer(Player player)
+        {
+            Players.Add(player);
+            Players = new ObservableCollection<Player>(Players.OrderByDescending(x => x.Score));
+        }
     }
 }

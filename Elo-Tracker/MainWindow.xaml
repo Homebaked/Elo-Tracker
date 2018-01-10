@@ -30,7 +30,12 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Border>
-                        <!--Ranking-->
+                        <DataGrid ItemsSource="{Binding Players}" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="Auto"/>
+                                <DataGridTextColumn Binding="{Binding Score}" Header="Score" Width="Auto"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </Border>
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>

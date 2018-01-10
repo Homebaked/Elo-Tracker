@@ -10,7 +10,7 @@ namespace Elo_Tracker.Models
     {
         public readonly Guid Guid;
 
-        public readonly string Name;
+        public string Name { get; }
 
         public int Score { get; private set; }
 
@@ -37,6 +37,11 @@ namespace Elo_Tracker.Models
         public static Player CreateExistingPlayer(string name, int score, Guid guid)
         {
             return new Player(name, score, guid);
+        }
+
+        public void SetScore(int score)
+        {
+            this.Score = score;
         }
     }
 }
