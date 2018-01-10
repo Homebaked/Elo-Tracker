@@ -33,18 +33,18 @@ namespace Elo_Tracker.ViewModel
         public AddPlayerVM()
         {
             _playerName = "";
-            AddPlayerCommand = new RelayCommand(AddPlayerExecute, AddPlayerCanExecute);
+            AddPlayerCommand = new RelayCommand(addPlayerExecute, addPlayerCanExecute);
             rand = new Random();
         }
 
-        private void AddPlayerExecute()
+        private void addPlayerExecute()
         {
             Player newPlayer = Player.CreateNewPlayer(PlayerName);
             newPlayer.SetScore(rand.Next(0, 2000));
             PlayerAdded?.Invoke(newPlayer);
             PlayerName = "";
         }
-        private bool AddPlayerCanExecute()
+        private bool addPlayerCanExecute()
         {
             return PlayerName != "";
         }        

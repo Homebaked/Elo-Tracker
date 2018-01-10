@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Gregory Hanson\Source\Repos\Elo-Tracker\Elo-Tracker\App.xaml
-21107170394
+31146155267
 
-17-1695288260
+191758454541
 711287337825
-MainWindow.xaml;Views\AddPlayerView.xaml;
+MainWindow.xaml;Views\AddGameView.xaml;Views\AddPlayerView.xaml;
 
 False
 

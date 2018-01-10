@@ -20,6 +20,8 @@ namespace Elo_Tracker.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        public History History { get; }
+
         private ObservableCollection<Player> _players;
         public ObservableCollection<Player> Players
         {
@@ -38,6 +40,7 @@ namespace Elo_Tracker.ViewModel
 
         public MainViewModel()
         {
+            this.History = new History();
             this.Players = new ObservableCollection<Player>();
             AddPlayerVM = new AddPlayerVM();
             AddPlayerVM.PlayerAdded += addNewPlayer;

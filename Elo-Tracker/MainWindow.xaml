@@ -30,6 +30,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Border>
+                        <!--Player List-->
                         <DataGrid ItemsSource="{Binding Players}" AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="Auto"/>
@@ -44,6 +45,7 @@
                         </Grid.RowDefinitions>
                         <Border>
                             <!--Enter Match-->
+                            <views:AddGameView/>
                         </Border>
                         <Border Grid.Row="1">
                             <views:AddPlayerView VM="{Binding AddPlayerVM}"/>

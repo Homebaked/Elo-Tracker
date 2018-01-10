@@ -74,9 +74,13 @@
     <Compile Include="Models\History.cs" />
     <Compile Include="Models\Leaderboard.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="ViewModel\AddGameVM.cs" />
     <Compile Include="ViewModel\AddPlayerVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="Views\AddGameView.xaml.cs">
+      <DependentUpon>AddGameView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddPlayerView.xaml.cs">
       <DependentUpon>AddPlayerView.xaml</DependentUpon>
     </Compile>
@@ -92,6 +96,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\AddGameView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddPlayerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

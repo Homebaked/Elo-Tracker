@@ -8,7 +8,7 @@ namespace Elo_Tracker.Models
 {
     public class Game
     {
-        public enum WinState { White, Black, Draw };
+        public enum WinState { White = 1, Black, Draw };
 
         public readonly Guid Guid;
 

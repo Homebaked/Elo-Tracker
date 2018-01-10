@@ -30,3 +30,5 @@ C:\Users\Gregory Hanson\Source\Repos\Elo-Tracker\Elo-Tracker\obj\Debug\Elo-Track
 C:\Users\Gregory Hanson\Source\Repos\Elo-Tracker\Elo-Tracker\obj\Debug\Elo-Tracker.csproj.CoreCompileInputs.cache
 C:\Users\Gregory Hanson\Source\Repos\Elo-Tracker\Elo-Tracker\obj\Debug\Elo-Tracker.exe
 C:\Users\Gregory Hanson\Source\Repos\Elo-Tracker\Elo-Tracker\obj\Debug\Elo-Tracker.pdb
+C:\Users\Gregory Hanson\Source\Repos\Elo-Tracker\Elo-Tracker\obj\Debug\Views\AddGameView.g.cs
+C:\Users\Gregory Hanson\Source\Repos\Elo-Tracker\Elo-Tracker\obj\Debug\Views\AddGameView.baml
