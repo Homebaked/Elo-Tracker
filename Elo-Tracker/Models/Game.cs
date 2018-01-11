@@ -12,11 +12,11 @@ namespace Elo_Tracker.Models
     {
         public readonly Guid Guid;
 
-        public readonly Player White;
-        public readonly Player Black;
-
         public readonly int WhiteStartingScore;
         public readonly int BlackStartingScore;
+
+        public Player White { get; }
+        public Player Black { get; }
 
         public DateTime TimePlayed { get; private set; }
         public WinState Winner { get; private set; }

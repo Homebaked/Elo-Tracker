@@ -9,23 +9,30 @@ namespace Elo_Tracker.Models
 {
     public class History
     {
-        public ObservableCollection<Game> GameHistory { get; private set; }
+        private ObservableCollection<Game> _gameHistory;
+        public ReadOnlyObservableCollection<Game> GameHistory
+        {
+            get
+            {
+                return new ReadOnlyObservableCollection<Game>(_gameHistory);
+            }
+        }
 
         public History(IEnumerable<Game> history = null)
         {
             if (history == null)
             {
-                GameHistory = new ObservableCollection<Game>();
+                _gameHistory = new ObservableCollection<Game>();
             }
             else
             {
-                GameHistory = new ObservableCollection<Game>(history);
+                _gameHistory = new ObservableCollection<Game>(history);
             }
         }
 
         public void AddGame(Game game)
         {
-            GameHistory.Add(game);
+            _gameHistory.Add(game);
         }
     }
 }

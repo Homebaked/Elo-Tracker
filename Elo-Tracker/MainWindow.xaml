@@ -80,6 +80,15 @@
                     </Border>
                     <Border Grid.Column="1">
                         <!--Active History-->
+                        <DataGrid ItemsSource="{Binding HistoryVM.ActiveHistory.GameHistory}"
+                                  AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="White" Binding="{Binding White.Name}"/>
+                                <DataGridTextColumn Header="Black" Binding="{Binding Black.Name}"/>
+                                <DataGridTextColumn Header="Winner" Binding="{Binding Winner}"/>
+                                <DataGridTextColumn Header="Date/Time" Binding="{Binding TimePlayed}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </Border>
                 </Grid>
             </TabItem>
