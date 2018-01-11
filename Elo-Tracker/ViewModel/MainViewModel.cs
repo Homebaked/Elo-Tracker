@@ -1,4 +1,5 @@
 using Elo_Tracker.Models;
+using Elo_Tracker.Utilities;
 using GalaSoft.MvvmLight;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,33 +24,36 @@ namespace Elo_Tracker.ViewModel
         public History History { get; }
 
         private ObservableCollection<Player> _players;
-        public ObservableCollection<Player> Players
+        public ReadOnlyObservableCollection<Player> Players
         {
             get
             {
-                return _players;
-            }
-            private set
-            {
-                _players = value;
-                RaisePropertyChanged("Players");
+                return new ReadOnlyObservableCollection<Player>(_players);
             }
         }
 
         public AddPlayerVM AddPlayerVM { get; private set; }
+        public AddGameVM AddGameVM { get; private set; }
 
         public MainViewModel()
         {
             this.History = new History();
-            this.Players = new ObservableCollection<Player>();
+            this._players = new ObservableCollection<Player>();
             AddPlayerVM = new AddPlayerVM();
             AddPlayerVM.PlayerAdded += addNewPlayer;
+            AddGameVM = new AddGameVM(Players);
+            AddGameVM.GameAdded += addNewGame;
         }
 
         private void addNewPlayer(Player player)
         {
-            Players.Add(player);
-            Players = new ObservableCollection<Player>(Players.OrderByDescending(x => x.Score));
+            _players.Add(player);
+            _players.Sort(Player.compareScores);
+        }
+
+        private void addNewGame(Game game)
+        {
+            History.AddGame(game);
         }
     }
 }

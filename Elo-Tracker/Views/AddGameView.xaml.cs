@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Elo_Tracker.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,19 @@ namespace Elo_Tracker.Views
     /// </summary>
     public partial class AddGameView : UserControl
     {
+        
+        public AddGameVM VM
+        {
+            get { return (AddGameVM)GetValue(VMProperty); }
+            set { SetValue(VMProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for VM.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty VMProperty =
+            DependencyProperty.Register("VM", typeof(AddGameVM), typeof(AddGameView));
+
+
+
         public AddGameView()
         {
             InitializeComponent();

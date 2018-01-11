@@ -74,6 +74,7 @@
     <Compile Include="Models\History.cs" />
     <Compile Include="Models\Leaderboard.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Utilities\Utilities.cs" />
     <Compile Include="ViewModel\AddGameVM.cs" />
     <Compile Include="ViewModel\AddPlayerVM.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

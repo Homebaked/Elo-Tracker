@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Elo_Tracker.Models
 {
+    public enum WinState { White = 1, Black, Draw };
+
     public class Game
     {
-        public enum WinState { White = 1, Black, Draw };
-
         public readonly Guid Guid;
 
         public readonly Player White;

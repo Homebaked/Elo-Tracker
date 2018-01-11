@@ -1,5 +1,6 @@
 ﻿using Elo_Tracker.Models;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -55,18 +56,19 @@ namespace Elo_Tracker.ViewModel
             }
         }
 
-        public List<Player> Players { get; }
+        public ReadOnlyObservableCollection<Player> Players { get; }
 
         public ICommand AddGameCommand { get; private set; }
 
         public event Action<Game> GameAdded;
 
-        public AddGameVM(IEnumerable<Player> players)
+        public AddGameVM(ReadOnlyObservableCollection<Player> players)
         {
-            Players = new List<Player>(players);
+            Players = players;
             White = null;
             Black = null;
             Winner = 0;
+            AddGameCommand = new RelayCommand(addGameExecute, addGameCanExecute);
         }
 
         private void addGameExecute()

@@ -45,7 +45,7 @@
                         </Grid.RowDefinitions>
                         <Border>
                             <!--Enter Match-->
-                            <views:AddGameView/>
+                            <views:AddGameView VM="{Binding AddGameVM}"/>
                         </Border>
                         <Border Grid.Row="1">
                             <views:AddPlayerView VM="{Binding AddPlayerVM}"/>

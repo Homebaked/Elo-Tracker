@@ -43,5 +43,21 @@ namespace Elo_Tracker.Models
         {
             this.Score = score;
         }
+
+        public static int compareScores(Player p1, Player p2)
+        {
+            if (p1.Score > p2.Score)
+            {
+                return 1;
+            }
+            else if (p1.Score < p2.Score)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }
