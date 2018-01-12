@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:Elo_Tracker.Views"
         xmlns:local="clr-namespace:Elo_Tracker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525"
+        Title="MainWindow" Height="500" Width="800"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     <Window.Resources>
         <Style TargetType="Border">
@@ -65,16 +65,21 @@
                                 <RowDefinition/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            
+
                             <!--Player DataGrid-->
+                            <DataGrid ItemsSource="{Binding HistoryVM.Players}" 
+                                      AutoGenerateColumns="False"
+                                      SelectedItem="{Binding HistoryVM.SelectedPlayer}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Name}" 
+                                                        Header="Name" Width="Auto"/>
+                                    <DataGridTextColumn Binding="{Binding Score}" 
+                                                        Header="Score" Width="Auto"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
 
-                            <Button Grid.Row="1" Content="Player History"/>
-
-                            <Button Grid.Row="1" Grid.Column="1" Content="Total History"/>
+                            <Button Grid.Row="1" Grid.Column="1" Content="Total History"
+                                    Command="{Binding HistoryVM.TotalHistoryCommand}"/>
 
                         </Grid>
                     </Border>
@@ -85,7 +90,8 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="White" Binding="{Binding White.Name}"/>
                                 <DataGridTextColumn Header="Black" Binding="{Binding Black.Name}"/>
-                                <DataGridTextColumn Header="Winner" Binding="{Binding Winner}"/>
+                                <!--To do: Make a converter for Draw-->
+                                <DataGridTextColumn Header="Winner" Binding="{Binding PlayerWinner.Name}"/>
                                 <DataGridTextColumn Header="Date/Time" Binding="{Binding TimePlayed}"/>
                             </DataGrid.Columns>
                         </DataGrid>

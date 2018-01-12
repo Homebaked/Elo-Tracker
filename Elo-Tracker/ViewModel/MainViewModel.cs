@@ -44,7 +44,7 @@ namespace Elo_Tracker.ViewModel
             AddPlayerVM.PlayerAdded += addNewPlayer;
             AddGameVM = new AddGameVM(Players);
             AddGameVM.GameAdded += addNewGame;
-            HistoryVM = new HistoryVM(this.History);
+            HistoryVM = new HistoryVM(this.History, Players);
         }
 
         private void addNewPlayer(Player player)

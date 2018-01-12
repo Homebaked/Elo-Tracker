@@ -21,6 +21,25 @@ namespace Elo_Tracker.Models
         public DateTime TimePlayed { get; private set; }
         public WinState Winner { get; private set; }
 
+        public Player PlayerWinner
+        {
+            get
+            {
+                if (Winner == WinState.White)
+                {
+                    return White;
+                }
+                else if (Winner == WinState.Black)
+                {
+                    return Black;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
         private Game(Player white, Player black, WinState winner, Guid? guid = null, int? whiteStartScore = null, int? blackStartScore = null, DateTime? timePlayed = null)
         {
             this.White = white;

@@ -34,5 +34,18 @@ namespace Elo_Tracker.Models
         {
             _gameHistory.Add(game);
         }
+
+        public History filter(Player player)
+        {
+            List<Game> playerHistory = new List<Game>();
+            foreach(Game game in this.GameHistory)
+            {
+                if (game.White == player || game.Black == player)
+                {
+                    playerHistory.Add(game);
+                }
+            }
+            return new History(playerHistory);
+        }
     }
 }

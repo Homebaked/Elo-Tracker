@@ -77,7 +77,6 @@ namespace Elo_Tracker.ViewModel
             GameAdded?.Invoke(newGame);
             White = null;
             Black = null;
-            Winner = 0;
         }
         private bool addGameCanExecute()
         {
