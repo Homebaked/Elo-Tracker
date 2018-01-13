@@ -1,8 +1,12 @@
 using Elo_Tracker.Models;
+using Elo_Tracker.ObjectSerializers;
 using Elo_Tracker.Utilities;
 using GalaSoft.MvvmLight;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 
 namespace Elo_Tracker.ViewModel
@@ -56,6 +60,36 @@ namespace Elo_Tracker.ViewModel
         private void addNewGame(Game game)
         {
             History.AddGame(game);
+        }
+
+        private void saveExecute()
+        {
+            string playerSaveFile = Path.Combine(dataDir, "players.elo");
+            List<PlayerSerializer> pSerials = PlayerSerializer.SerializeList(Players);
+            Serializer<PlayerSerializer>.Save(pSerials, playerSaveFile);
+
+            string gameSaveFile = Path.Combine(dataDir, "games.elo");
+            //Serializer<Game>.Save(History.GameHistory, gameSaveFile);
+        }
+        private void loadExecute()
+        {
+            string playerSaveFile = Path.Combine(dataDir, "players.elo");
+            IEnumerable<PlayerSerializer> pSerials = Serializer<PlayerSerializer>.Load(playerSaveFile);
+            _players = new ObservableCollection<Player>(PlayerSerializer.UnserializeList(pSerials));
+            RaisePropertyChanged("Players");
+
+            string gameSaveFile = Path.Combine(dataDir, "games.elo");
+            //History.Refresh(Serializer<Game>.Load(gameSaveFile));
+        }
+
+        private static string dataDir
+        {
+            get
+            {
+                string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string dir = Path.Combine(appData, "ELO/");
+                return dir;
+            }
         }
     }
 }

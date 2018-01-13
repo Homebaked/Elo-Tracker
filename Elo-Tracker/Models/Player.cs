@@ -14,6 +14,7 @@ namespace Elo_Tracker.Models
 
         public int Score { get; private set; }
 
+        private Player() { }
         private Player(string name, int score = 1200, Guid? guid = null)
         {
             this.Name = name;
@@ -33,7 +34,6 @@ namespace Elo_Tracker.Models
         {
             return new Player(name);
         }
-
         public static Player CreateExistingPlayer(string name, int score, Guid guid)
         {
             return new Player(name, score, guid);
@@ -59,5 +59,7 @@ namespace Elo_Tracker.Models
                 return 0;
             }
         }
+
+        
     }
 }

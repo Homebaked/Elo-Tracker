@@ -30,6 +30,18 @@ namespace Elo_Tracker.Models
             }
         }
 
+        public void Refresh(IEnumerable<Game> history)
+        {
+            while (_gameHistory.Count > 0)
+            {
+                _gameHistory.RemoveAt(0);
+            }
+            foreach(Game game in history)
+            {
+                _gameHistory.Add(game);
+            }
+        }
+
         public void AddGame(Game game)
         {
             _gameHistory.Add(game);
