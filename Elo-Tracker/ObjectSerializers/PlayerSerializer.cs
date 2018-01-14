@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Elo_Tracker.ObjectSerializers
 {
-    public class PlayerSerializer
+    [Serializable]
+    public class PlayerSerializer : ISerializable
     {
         public readonly Guid Guid;
         public readonly string Name;
@@ -20,6 +22,13 @@ namespace Elo_Tracker.ObjectSerializers
             Guid = player.Guid;
             Name = player.Name;
             Score = player.Score;
+        }
+
+        public PlayerSerializer(SerializationInfo info, StreamingContext context)
+        {
+            Guid = (Guid)info.GetValue("Guid", typeof(Guid));
+            Name = (string)info.GetValue("Name", typeof(string));
+            Score = (int)info.GetValue("Score", typeof(int));
         }
 
         public Player GetPlayer()
@@ -45,6 +54,13 @@ namespace Elo_Tracker.ObjectSerializers
                 players.Add(pSerial.GetPlayer());
             }
             return players;
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Guid", Guid, typeof(Guid));
+            info.AddValue("Name", Name, typeof(string));
+            info.AddValue("Score", Score, typeof(int));
         }
     }
 }

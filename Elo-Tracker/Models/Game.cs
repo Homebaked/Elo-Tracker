@@ -39,8 +39,7 @@ namespace Elo_Tracker.Models
                 }
             }
         }
-
-        private Game() { }
+        
         private Game(Player white, Player black, WinState winner, Guid? guid = null, int? whiteStartScore = null, int? blackStartScore = null, DateTime? timePlayed = null)
         {
             this.White = white;

@@ -49,17 +49,20 @@ namespace Elo_Tracker.ViewModel
             AddGameVM = new AddGameVM(Players);
             AddGameVM.GameAdded += addNewGame;
             HistoryVM = new HistoryVM(this.History, Players);
+            loadExecute();
         }
 
         private void addNewPlayer(Player player)
         {
             _players.Add(player);
             _players.Sort(Player.compareScores);
+            saveExecute();
         }
 
         private void addNewGame(Game game)
         {
             History.AddGame(game);
+            //saveExecute();
         }
 
         private void saveExecute()
@@ -74,6 +77,7 @@ namespace Elo_Tracker.ViewModel
         private void loadExecute()
         {
             string playerSaveFile = Path.Combine(dataDir, "players.elo");
+            if (!File.Exists(playerSaveFile)) return;
             IEnumerable<PlayerSerializer> pSerials = Serializer<PlayerSerializer>.Load(playerSaveFile);
             _players = new ObservableCollection<Player>(PlayerSerializer.UnserializeList(pSerials));
             RaisePropertyChanged("Players");
