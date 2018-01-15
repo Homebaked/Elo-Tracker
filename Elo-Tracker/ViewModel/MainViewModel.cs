@@ -62,7 +62,7 @@ namespace Elo_Tracker.ViewModel
         private void addNewGame(Game game)
         {
             History.AddGame(game);
-            //saveExecute();
+            saveExecute();
         }
 
         private void saveExecute()
@@ -72,18 +72,34 @@ namespace Elo_Tracker.ViewModel
             Serializer<PlayerSerializer>.Save(pSerials, playerSaveFile);
 
             string gameSaveFile = Path.Combine(dataDir, "games.elo");
-            //Serializer<Game>.Save(History.GameHistory, gameSaveFile);
+            List<GameSerializer> gSerials = GameSerializer.SerializeList(History.GameHistory);
+            Serializer<GameSerializer>.Save(gSerials, gameSaveFile);
         }
         private void loadExecute()
         {
             string playerSaveFile = Path.Combine(dataDir, "players.elo");
             if (!File.Exists(playerSaveFile)) return;
             IEnumerable<PlayerSerializer> pSerials = Serializer<PlayerSerializer>.Load(playerSaveFile);
-            _players = new ObservableCollection<Player>(PlayerSerializer.UnserializeList(pSerials));
-            RaisePropertyChanged("Players");
+            refreshPlayers(PlayerSerializer.UnserializeList(pSerials));
 
             string gameSaveFile = Path.Combine(dataDir, "games.elo");
-            //History.Refresh(Serializer<Game>.Load(gameSaveFile));
+            if (!File.Exists(gameSaveFile)) return;
+            IEnumerable<GameSerializer> gSerials = Serializer<GameSerializer>.Load(gameSaveFile);
+            History.Refresh(GameSerializer.UnserializeList(gSerials, Players));
+        }
+
+        private void refreshPlayers(IEnumerable<Player> players)
+        {
+            List<Player> playersToRemove = new List<Player>(Players);
+            foreach(Player player in playersToRemove)
+            {
+                _players.Remove(player);
+            }
+            foreach(Player player in players)
+            {
+                _players.Add(player);
+            }
+            _players.Sort(Player.compareScores);
         }
 
         private static string dataDir

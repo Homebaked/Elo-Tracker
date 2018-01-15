@@ -42,7 +42,8 @@ namespace Elo_Tracker.ObjectSerializers
             Black = (Guid)info.GetValue("Black", typeof(Guid));
             WhiteStartingScore = (int)info.GetValue("WhiteScore", typeof(int));
             BlackStartingScore = (int)info.GetValue("BlackScore", typeof(int));
-            TimePlayed = (DateTime)info.GetValue("TimePlayed", typeof(DateTime));
+            string timePlayed = (string)info.GetValue("TimePlayed", typeof(string));
+            TimePlayed = Convert.ToDateTime(timePlayed);
             Winner = (WinState)info.GetValue("Winner", typeof(WinState));
         }
 
@@ -53,11 +54,11 @@ namespace Elo_Tracker.ObjectSerializers
 
             foreach(Player player in players)
             {
-                if (player.Guid == white.Guid)
+                if (player.Guid == White)
                 {
                     white = player;
                 }
-                else if (player.Guid == black.Guid)
+                else if (player.Guid == Black)
                 {
                     black = player;
                 }
@@ -99,7 +100,8 @@ namespace Elo_Tracker.ObjectSerializers
             info.AddValue("Black", Black, typeof(Guid));
             info.AddValue("WhiteScore", WhiteStartingScore, typeof(int));
             info.AddValue("BlackScore", BlackStartingScore, typeof(int));
-            info.AddValue("TimePlayed", TimePlayed, typeof(DateTime));
+            string timePlayed = Convert.ToString(TimePlayed);
+            info.AddValue("TimePlayed", timePlayed, typeof(string));
             info.AddValue("Winner", Winner, typeof(WinState));
         }
     }

@@ -72,7 +72,7 @@ namespace Elo_Tracker.Models
             }
             if (timePlayed.HasValue)
             {
-                this.TimePlayed = TimePlayed;
+                this.TimePlayed = timePlayed.Value;
             }
             else
             {
@@ -80,14 +80,56 @@ namespace Elo_Tracker.Models
             }
         }
 
+        public int CalculateWhiteScore()
+        {
+            int winLoss = 0;
+            if (Winner == WinState.White)
+            {
+                winLoss = 1;
+            }
+            else if (Winner == WinState.Black)
+            {
+                winLoss = -1;
+            }
+
+            int scoreChange = CalculateScoreChange(WhiteStartingScore, BlackStartingScore, winLoss);
+            return WhiteStartingScore + scoreChange;
+        }
+        public int CalculateBlackScore()
+        {
+            int winLoss = 0;
+            if (Winner == WinState.White)
+            {
+                winLoss = -1;
+            }
+            else if (Winner == WinState.Black)
+            {
+                winLoss = 1;
+            }
+
+            int scoreChange = CalculateScoreChange(BlackStartingScore, WhiteStartingScore, winLoss);
+            return BlackStartingScore + scoreChange;
+        }
+        
         public static Game CreateNewGame(Player white, Player black, WinState winner)
         {
             return new Game(white, black, winner);
         }
-
         public static Game CreateExistingGame(Player white, Player black, WinState winner, Guid guid, int whiteStartScore, int blackStartScore, DateTime timePlayed)
         {
             return new Game(white, black, winner, guid, whiteStartScore, blackStartScore, timePlayed);
+        }
+        public static double CalculateExpectedScore(int playerScore, int otherScore)
+        {
+            double expectedScore = (1 / (1 + (Math.Pow(10, ((otherScore - playerScore) / 400)))));
+            return expectedScore;
+        }
+        public static int CalculateScoreChange(int playerScore, int otherScore, int winLoss)
+        {
+            double modifier = (winLoss + 1) / 2.0;
+            double expectedScore = CalculateExpectedScore(playerScore, otherScore);
+            int scoreChange = (int)Math.Round(32 * (modifier - expectedScore));
+            return scoreChange;
         }
     }
 }
