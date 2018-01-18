@@ -22,7 +22,7 @@
             <ObjectDataProvider x:Key="winStateEnum" MethodName="GetValues"
                                 ObjectType="{x:Type System:Enum}">
                 <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="models:WinState"/>
+                    <x:Type TypeName="models:GameWinState"/>
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
         </Grid.Resources>

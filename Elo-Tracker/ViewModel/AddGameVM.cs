@@ -16,7 +16,7 @@ namespace Elo_Tracker.ViewModel
     {
         private Player _black;
         private Player _white;
-        private WinState _winner;
+        private GameWinState _winner;
 
         public Player White
         {
@@ -43,7 +43,7 @@ namespace Elo_Tracker.ViewModel
             }
         }
 
-        public WinState Winner
+        public GameWinState Winner
         {
             get
             {

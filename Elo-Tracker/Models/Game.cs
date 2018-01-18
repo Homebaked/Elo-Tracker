@@ -6,30 +6,30 @@ using System.Threading.Tasks;
 
 namespace Elo_Tracker.Models
 {
-    public enum WinState { White = 1, Black, Draw };
+    public enum GameWinState { White = 1, Black, Stalemate };
 
     public class Game
     {
         public readonly Guid Guid;
 
-        public readonly int WhiteStartingScore;
-        public readonly int BlackStartingScore;
+        public int WhiteStartingScore { get; }
+        public int BlackStartingScore { get; }
 
         public Player White { get; }
         public Player Black { get; }
 
         public DateTime TimePlayed { get; private set; }
-        public WinState Winner { get; private set; }
+        public GameWinState Winner { get; private set; }
 
         public Player PlayerWinner
         {
             get
             {
-                if (Winner == WinState.White)
+                if (Winner == GameWinState.White)
                 {
                     return White;
                 }
-                else if (Winner == WinState.Black)
+                else if (Winner == GameWinState.Black)
                 {
                     return Black;
                 }
@@ -40,7 +40,7 @@ namespace Elo_Tracker.Models
             }
         }
         
-        private Game(Player white, Player black, WinState winner, Guid? guid = null, int? whiteStartScore = null, int? blackStartScore = null, DateTime? timePlayed = null)
+        private Game(Player white, Player black, GameWinState winner, Guid? guid = null, int? whiteStartScore = null, int? blackStartScore = null, DateTime? timePlayed = null)
         {
             this.White = white;
             this.Black = black;
@@ -80,42 +80,60 @@ namespace Elo_Tracker.Models
             }
         }
 
-        public int CalculateWhiteScore()
+        public int CalculateWhiteScore(PenaltySettings settings, History history)
         {
             int winLoss = 0;
-            if (Winner == WinState.White)
+            if (Winner == GameWinState.White)
             {
                 winLoss = 1;
             }
-            else if (Winner == WinState.Black)
+            else if (Winner == GameWinState.Black)
             {
                 winLoss = -1;
             }
 
-            int scoreChange = CalculateScoreChange(WhiteStartingScore, BlackStartingScore, winLoss);
-            return WhiteStartingScore + scoreChange;
+            double scoreChange = CalculateScoreChange(WhiteStartingScore, BlackStartingScore, winLoss);
+            double penalty = settings.GetPenalty(this, White, history);
+            return WhiteStartingScore + (int)Math.Round(scoreChange * penalty);
         }
-        public int CalculateBlackScore()
+        public int CalculateBlackScore(PenaltySettings settings, History history)
         {
             int winLoss = 0;
-            if (Winner == WinState.White)
+            if (Winner == GameWinState.White)
             {
                 winLoss = -1;
             }
-            else if (Winner == WinState.Black)
+            else if (Winner == GameWinState.Black)
             {
                 winLoss = 1;
             }
 
-            int scoreChange = CalculateScoreChange(BlackStartingScore, WhiteStartingScore, winLoss);
-            return BlackStartingScore + scoreChange;
+            double scoreChange = CalculateScoreChange(BlackStartingScore, WhiteStartingScore, winLoss);
+            double penalty = settings.GetPenalty(this, Black, history);
+            return BlackStartingScore + (int)Math.Round(scoreChange * penalty);
+        }
+
+        public Player GetOtherPlayer(Player player)
+        {
+            if (player == White)
+            {
+                return Black;
+            } 
+            else if (player == Black)
+            {
+                return White;
+            }
+            else
+            {
+                return null;
+            }
         }
         
-        public static Game CreateNewGame(Player white, Player black, WinState winner)
+        public static Game CreateNewGame(Player white, Player black, GameWinState winner)
         {
             return new Game(white, black, winner);
         }
-        public static Game CreateExistingGame(Player white, Player black, WinState winner, Guid guid, int whiteStartScore, int blackStartScore, DateTime timePlayed)
+        public static Game CreateExistingGame(Player white, Player black, GameWinState winner, Guid guid, int whiteStartScore, int blackStartScore, DateTime timePlayed)
         {
             return new Game(white, black, winner, guid, whiteStartScore, blackStartScore, timePlayed);
         }
@@ -124,11 +142,11 @@ namespace Elo_Tracker.Models
             double expectedScore = (1 / (1 + (Math.Pow(10, ((otherScore - playerScore) / 400)))));
             return expectedScore;
         }
-        public static int CalculateScoreChange(int playerScore, int otherScore, int winLoss)
+        public static double CalculateScoreChange(int playerScore, int otherScore, int winLoss)
         {
             double modifier = (winLoss + 1) / 2.0;
             double expectedScore = CalculateExpectedScore(playerScore, otherScore);
-            int scoreChange = (int)Math.Round(32 * (modifier - expectedScore));
+            double scoreChange = 32 * (modifier - expectedScore);
             return scoreChange;
         }
     }

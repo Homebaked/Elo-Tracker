@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Elo_Tracker.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -58,6 +59,27 @@ namespace Elo_Tracker.Models
                 }
             }
             return new History(playerHistory);
+        }
+
+        public void SortByDate()
+        {
+            _gameHistory.Sort(gameDateComparison);
+
+            int gameDateComparison(Game game1, Game game2)
+            {
+                if (game1.TimePlayed > game2.TimePlayed)
+                {
+                    return 1;
+                }
+                else if (game1.TimePlayed < game2.TimePlayed)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
         }
     }
 }

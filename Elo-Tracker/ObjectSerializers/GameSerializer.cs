@@ -20,7 +20,7 @@ namespace Elo_Tracker.ObjectSerializers
 
         public readonly DateTime TimePlayed; 
 
-        public readonly WinState Winner;
+        public readonly GameWinState Winner;
 
         public GameSerializer() { }
 
@@ -44,7 +44,7 @@ namespace Elo_Tracker.ObjectSerializers
             BlackStartingScore = (int)info.GetValue("BlackScore", typeof(int));
             string timePlayed = (string)info.GetValue("TimePlayed", typeof(string));
             TimePlayed = Convert.ToDateTime(timePlayed);
-            Winner = (WinState)info.GetValue("Winner", typeof(WinState));
+            Winner = (GameWinState)info.GetValue("Winner", typeof(GameWinState));
         }
 
         public Game GetGame(IEnumerable<Player> players)
@@ -102,7 +102,7 @@ namespace Elo_Tracker.ObjectSerializers
             info.AddValue("BlackScore", BlackStartingScore, typeof(int));
             string timePlayed = Convert.ToString(TimePlayed);
             info.AddValue("TimePlayed", timePlayed, typeof(string));
-            info.AddValue("Winner", Winner, typeof(WinState));
+            info.AddValue("Winner", Winner, typeof(GameWinState));
         }
     }
 }

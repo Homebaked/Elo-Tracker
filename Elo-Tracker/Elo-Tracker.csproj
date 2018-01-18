@@ -73,6 +73,7 @@
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\History.cs" />
     <Compile Include="Models\Leaderboard.cs" />
+    <Compile Include="Models\PenaltySettings.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="ObjectSerializers\GameSerializer.cs" />
     <Compile Include="ObjectSerializers\PlayerSerializer.cs" />

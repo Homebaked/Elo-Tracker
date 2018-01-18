@@ -25,6 +25,8 @@ namespace Elo_Tracker.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        private PenaltySettings settings;
+
         public History History { get; }
 
         private ObservableCollection<Player> _players;
@@ -42,6 +44,7 @@ namespace Elo_Tracker.ViewModel
 
         public MainViewModel()
         {
+            settings = new PenaltySettings();
             this.History = new History();
             this._players = new ObservableCollection<Player>();
             AddPlayerVM = new AddPlayerVM();
@@ -62,6 +65,8 @@ namespace Elo_Tracker.ViewModel
         private void addNewGame(Game game)
         {
             History.AddGame(game);
+            game.White.SetScore(game.CalculateWhiteScore(settings, History));
+            game.Black.SetScore(game.CalculateBlackScore(settings, History));
             saveExecute();
         }
 
