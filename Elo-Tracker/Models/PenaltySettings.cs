@@ -32,7 +32,7 @@ namespace Elo_Tracker.Models
             History playerHistory = history.filter(player);
             playerHistory.SortByDate();
 
-            int i = 0, gamesPlayed = 0;
+            int i = 1, gamesPlayed = 0;
             Player opponent = history.GameHistory[0].GetOtherPlayer(player);
             foreach(Game g in history.GameHistory)
             {
